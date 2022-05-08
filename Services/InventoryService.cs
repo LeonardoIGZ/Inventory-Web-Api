@@ -62,23 +62,27 @@ public class InventoryServices
         var category = context.Categories
                         .SingleOrDefault(c => c.CategoryId == categoryUpdate.CategoryId);
 
-        if (category.CategoryId != categoryUpdate.CategoryId)
-            categoryUpdate.CategoryId = category.CategoryId;
+        if (category != null)
+        {
 
-        if (category.CategoryName != categoryUpdate.CategoryName)
-            categoryUpdate.CategoryName = category.CategoryName;
+            if (category.CategoryId != categoryUpdate.CategoryId)
+                categoryUpdate.CategoryId = category.CategoryId;
 
-        if (category.Description != categoryUpdate.Description)
-            categoryUpdate.Description = category.Description;
+            if (category.CategoryName != categoryUpdate.CategoryName)
+                categoryUpdate.CategoryName = category.CategoryName;
 
-        if (category.Picture != categoryUpdate.Picture)
-            categoryUpdate.Picture = category.Picture;
+            if (category.Description != categoryUpdate.Description)
+                categoryUpdate.Description = category.Description;
 
-        if (category.CompanyId != categoryUpdate.CompanyId)
-            categoryUpdate.CompanyId = category.CompanyId;
+            if (category.Picture != categoryUpdate.Picture)
+                categoryUpdate.Picture = category.Picture;
 
-        context.Categories.Update(category);
-        context.SaveChanges();
+            if (category.CompanyId != categoryUpdate.CompanyId)
+                categoryUpdate.CompanyId = category.CompanyId;
+
+            context.Categories.Update(category);
+            context.SaveChanges();
+        }
     }
 
     /// --- Company
@@ -133,29 +137,32 @@ public class InventoryServices
         var company = context.Companies
                         .SingleOrDefault(c => c.CompanyId == companyUpdate.CompanyId);
 
-        if (company.CompanyId != companyUpdate.CompanyId)
-            companyUpdate.CompanyId = company.CompanyId;
+        if (company != null)
+        {
+            if (company.CompanyId != companyUpdate.CompanyId)
+                companyUpdate.CompanyId = company.CompanyId;
 
-        if (company.CompanyName != companyUpdate.CompanyName)
-            companyUpdate.CompanyName = company.CompanyName;
+            if (company.CompanyName != companyUpdate.CompanyName)
+                companyUpdate.CompanyName = company.CompanyName;
 
-        if (company.AccountEmail != companyUpdate.AccountEmail)
-            companyUpdate.AccountEmail = company.AccountEmail;
+            if (company.AccountEmail != companyUpdate.AccountEmail)
+                companyUpdate.AccountEmail = company.AccountEmail;
 
-        if (company.Password != companyUpdate.Password)
-            companyUpdate.Password = company.Password;
+            if (company.Password != companyUpdate.Password)
+                companyUpdate.Password = company.Password;
 
-        if (company.BeginPlan != companyUpdate.BeginPlan)
-            companyUpdate.BeginPlan = company.BeginPlan;
+            if (company.BeginPlan != companyUpdate.BeginPlan)
+                companyUpdate.BeginPlan = company.BeginPlan;
 
-        if (company.EndPlan != companyUpdate.EndPlan)
-            companyUpdate.EndPlan = company.EndPlan;
+            if (company.EndPlan != companyUpdate.EndPlan)
+                companyUpdate.EndPlan = company.EndPlan;
 
-        if (company.Active != companyUpdate.Active)
-            companyUpdate.Active = company.Active;
+            if (company.Active != companyUpdate.Active)
+                companyUpdate.Active = company.Active;
 
-        context.Companies.Update(company);
-        context.SaveChanges();
+            context.Companies.Update(company);
+            context.SaveChanges();
+        }
     }
 
     /// --- Employee
@@ -213,38 +220,42 @@ public class InventoryServices
         var employee = context.Employees
                         .SingleOrDefault(e => e.EmployeeId == employeeUpdate.EmployeeId);
 
-        if (employee.EmployeeId != employeeUpdate.EmployeeId)
-            employeeUpdate.EmployeeId = employee.EmployeeId;
+        if (employee != null)
+        {
 
-        if (employee.LastName != employeeUpdate.LastName)
-            employeeUpdate.LastName = employee.LastName;
+            if (employee.EmployeeId != employeeUpdate.EmployeeId)
+                employeeUpdate.EmployeeId = employee.EmployeeId;
 
-        if (employee.FirstName != employeeUpdate.FirstName)
-            employeeUpdate.FirstName = employee.FirstName;
+            if (employee.LastName != employeeUpdate.LastName)
+                employeeUpdate.LastName = employee.LastName;
 
-        if (employee.HireDate != employeeUpdate.HireDate)
-            employeeUpdate.HireDate = employee.HireDate;
+            if (employee.FirstName != employeeUpdate.FirstName)
+                employeeUpdate.FirstName = employee.FirstName;
 
-        if (employee.Address != employeeUpdate.Address)
-            employeeUpdate.Address = employee.Address;
+            if (employee.HireDate != employeeUpdate.HireDate)
+                employeeUpdate.HireDate = employee.HireDate;
 
-        if (employee.HomePhone != employeeUpdate.HomePhone)
-            employeeUpdate.HomePhone = employee.HomePhone;
+            if (employee.Address != employeeUpdate.Address)
+                employeeUpdate.Address = employee.Address;
 
-        if (employee.ReportsTo != employeeUpdate.ReportsTo)
-            employeeUpdate.ReportsTo = employee.ReportsTo;
+            if (employee.HomePhone != employeeUpdate.HomePhone)
+                employeeUpdate.HomePhone = employee.HomePhone;
 
-        if (employee.Email != employeeUpdate.Email)
-            employeeUpdate.Email = employee.Email;
+            if (employee.ReportsTo != employeeUpdate.ReportsTo)
+                employeeUpdate.ReportsTo = employee.ReportsTo;
 
-        if (employee.Password != employeeUpdate.Password)
-            employeeUpdate.Password = employee.Password;
+            if (employee.Email != employeeUpdate.Email)
+                employeeUpdate.Email = employee.Email;
 
-        if (employee.CompanyId != employeeUpdate.CompanyId)
-            employeeUpdate.CompanyId = employee.CompanyId;
+            if (employee.Password != employeeUpdate.Password)
+                employeeUpdate.Password = employee.Password;
 
-        context.Employees.Update(employee);
-        context.SaveChanges();
+            if (employee.CompanyId != employeeUpdate.CompanyId)
+                employeeUpdate.CompanyId = employee.CompanyId;
+
+            context.Employees.Update(employee);
+            context.SaveChanges();
+        }
     }
 
 
@@ -302,36 +313,38 @@ public class InventoryServices
         var movement = context.Movements
                         .SingleOrDefault(m => m.MovementId == movementUpdate.MovementId);
 
-        if (movement.MovementId != movementUpdate.MovementId)
-            movementUpdate.MovementId = movement.MovementId;
+        if (movement != null)
+        {
+            if (movement.MovementId != movementUpdate.MovementId)
+                movementUpdate.MovementId = movement.MovementId;
 
-        if (movement.Date != movementUpdate.Date)
-            movementUpdate.Date = movement.Date;
+            if (movement.Date != movementUpdate.Date)
+                movementUpdate.Date = movement.Date;
 
-        if (movement.SupplierId != movementUpdate.SupplierId)
-            movementUpdate.SupplierId = movement.SupplierId;
+            if (movement.SupplierId != movementUpdate.SupplierId)
+                movementUpdate.SupplierId = movement.SupplierId;
 
-        if (movement.TargetWarehouse != movementUpdate.TargetWarehouse)
-            movementUpdate.TargetWarehouse = movement.TargetWarehouse;
+            if (movement.TargetWarehouse != movementUpdate.TargetWarehouse)
+                movementUpdate.TargetWarehouse = movement.TargetWarehouse;
 
-        if (movement.SourceWarehouse != movementUpdate.SourceWarehouse)
-            movementUpdate.SourceWarehouse = movement.SourceWarehouse;
+            if (movement.SourceWarehouse != movementUpdate.SourceWarehouse)
+                movementUpdate.SourceWarehouse = movement.SourceWarehouse;
 
-        if (movement.Type != movementUpdate.Type)
-            movementUpdate.Type = movement.Type;
+            if (movement.Type != movementUpdate.Type)
+                movementUpdate.Type = movement.Type;
 
-        if (movement.Notes != movementUpdate.Notes)
-            movementUpdate.Notes = movement.Notes;
+            if (movement.Notes != movementUpdate.Notes)
+                movementUpdate.Notes = movement.Notes;
 
+            if (movement.CompanyId != movementUpdate.CompanyId)
+                movementUpdate.CompanyId = movement.CompanyId;
 
-        if (movement.CompanyId != movementUpdate.CompanyId)
-            movementUpdate.CompanyId = movement.CompanyId;
+            if (movement.EmployeeId != movementUpdate.EmployeeId)
+                movementUpdate.EmployeeId = movement.EmployeeId;
 
-        if (movement.EmployeeId != movementUpdate.EmployeeId)
-            movementUpdate.EmployeeId = movement.EmployeeId;
-
-        context.Movements.Update(movement);
-        context.SaveChanges();
+            context.Movements.Update(movement);
+            context.SaveChanges();
+        }
     }
 
     // ---Products
@@ -386,34 +399,36 @@ public class InventoryServices
 
         var product = context.Products
                         .SingleOrDefault(p => p.ProductId == productUpdate.ProductId);
+        if (product != null)
+        {
+            if (product.ProductId != productUpdate.ProductId)
+                productUpdate.ProductId = product.ProductId;
 
-        if (product.ProductId != productUpdate.ProductId)
-            productUpdate.ProductId = product.ProductId;
+            if (product.ProductName != productUpdate.ProductName)
+                productUpdate.ProductName = product.ProductName;
 
-        if (product.ProductName != productUpdate.ProductName)
-            productUpdate.ProductName = product.ProductName;
+            if (product.SupplierId != productUpdate.SupplierId)
+                productUpdate.SupplierId = product.SupplierId;
 
-        if (product.SupplierId != productUpdate.SupplierId)
-            productUpdate.SupplierId = product.SupplierId;
+            if (product.CategoryId != productUpdate.CategoryId)
+                productUpdate.CategoryId = product.CategoryId;
 
-        if (product.CategoryId != productUpdate.CategoryId)
-            productUpdate.CategoryId = product.CategoryId;
+            if (product.QuantityPerUnit != productUpdate.QuantityPerUnit)
+                productUpdate.QuantityPerUnit = product.QuantityPerUnit;
 
-        if (product.QuantityPerUnit != productUpdate.QuantityPerUnit)
-            productUpdate.QuantityPerUnit = product.QuantityPerUnit;
+            if (product.UnitPrice != productUpdate.UnitPrice)
+                productUpdate.UnitPrice = product.UnitPrice;
 
-        if (product.UnitPrice != productUpdate.UnitPrice)
-            productUpdate.UnitPrice = product.UnitPrice;
-
-        if (product.PhotoPath != productUpdate.PhotoPath)
-            productUpdate.PhotoPath = product.PhotoPath;
+            if (product.PhotoPath != productUpdate.PhotoPath)
+                productUpdate.PhotoPath = product.PhotoPath;
 
 
-        if (product.CompanyId != productUpdate.CompanyId)
-            productUpdate.CompanyId = product.CompanyId;
+            if (product.CompanyId != productUpdate.CompanyId)
+                productUpdate.CompanyId = product.CompanyId;
 
-        context.Products.Update(product);
-        context.SaveChanges();
+            context.Products.Update(product);
+            context.SaveChanges();
+        }
     }
 
     // ---Suppliers
@@ -468,36 +483,38 @@ public class InventoryServices
 
         var supplier = context.Suppliers
                         .SingleOrDefault(s => s.SupplierId == supplierUpdate.SupplierId);
+        if (supplier != null)
+        {
+            if (supplier.SupplierId != supplierUpdate.SupplierId)
+                supplierUpdate.SupplierId = supplier.SupplierId;
 
-        if (supplier.SupplierId != supplierUpdate.SupplierId)
-            supplierUpdate.SupplierId = supplier.SupplierId;
+            if (supplier.CompanyName != supplierUpdate.CompanyName)
+                supplierUpdate.CompanyName = supplier.CompanyName;
 
-        if (supplier.CompanyName != supplierUpdate.CompanyName)
-            supplierUpdate.CompanyName = supplier.CompanyName;
+            if (supplier.ContactName != supplierUpdate.ContactName)
+                supplierUpdate.ContactName = supplier.ContactName;
 
-        if (supplier.ContactName != supplierUpdate.ContactName)
-            supplierUpdate.ContactName = supplier.ContactName;
+            if (supplier.Address != supplierUpdate.Address)
+                supplierUpdate.Address = supplier.Address;
 
-        if (supplier.Address != supplierUpdate.Address)
-            supplierUpdate.Address = supplier.Address;
+            if (supplier.City != supplierUpdate.City)
+                supplierUpdate.City = supplier.City;
 
-        if (supplier.City != supplierUpdate.City)
-            supplierUpdate.City = supplier.City;
+            if (supplier.PostalCode != supplierUpdate.PostalCode)
+                supplierUpdate.PostalCode = supplier.PostalCode;
 
-        if (supplier.PostalCode != supplierUpdate.PostalCode)
-            supplierUpdate.PostalCode = supplier.PostalCode;
+            if (supplier.Country != supplierUpdate.Country)
+                supplierUpdate.Country = supplier.Country;
 
-        if (supplier.Country != supplierUpdate.Country)
-            supplierUpdate.Country = supplier.Country;
+            if (supplier.Phone != supplierUpdate.Phone)
+                supplierUpdate.Phone = supplier.Phone;
 
-        if (supplier.Phone != supplierUpdate.Phone)
-            supplierUpdate.Phone = supplier.Phone;
+            if (supplier.CompanyId != supplierUpdate.CompanyId)
+                supplierUpdate.CompanyId = supplier.CompanyId;
 
-        if (supplier.CompanyId != supplierUpdate.CompanyId)
-            supplierUpdate.CompanyId = supplier.CompanyId;
-
-        context.Suppliers.Update(supplier);
-        context.SaveChanges();
+            context.Suppliers.Update(supplier);
+            context.SaveChanges();
+        }
     }
 
     /// ---WareHouses
@@ -549,20 +566,23 @@ public class InventoryServices
         var wh = context.Warehouses
                         .SingleOrDefault(w => w.WarehouseId == whUpdate.WarehouseId);
 
-        if (wh.WarehouseId != whUpdate.WarehouseId)
-            whUpdate.WarehouseId = wh.WarehouseId;
+        if (wh != null)
+        {
+            if (wh.WarehouseId != whUpdate.WarehouseId)
+                whUpdate.WarehouseId = wh.WarehouseId;
 
-        if (wh.Description != whUpdate.Description)
-            whUpdate.Description = wh.Description;
+            if (wh.Description != whUpdate.Description)
+                whUpdate.Description = wh.Description;
 
-        if (wh.Address != whUpdate.Address)
-            whUpdate.Address = wh.Address;
+            if (wh.Address != whUpdate.Address)
+                whUpdate.Address = wh.Address;
 
-        if (wh.CompanyId != whUpdate.CompanyId)
-            whUpdate.CompanyId = wh.CompanyId;
+            if (wh.CompanyId != whUpdate.CompanyId)
+                whUpdate.CompanyId = wh.CompanyId;
 
-        context.Warehouses.Update(wh);
-        context.SaveChanges();
+            context.Warehouses.Update(wh);
+            context.SaveChanges();
+        }
     }
 
     /// ---WareHousesproducts
@@ -574,7 +594,7 @@ public class InventoryServices
     }
 
     /*
-    
+
     public Warehouseproduct? GetWarehouseproductByID(int id)
     {
         return context.Warehouseproducts
@@ -619,27 +639,29 @@ public class InventoryServices
 
         var whp = context.Warehouseproducts
                         .SingleOrDefault(w => w.WarehouseId == whpUpdate.WarehouseId);
+        if (whp != null)
+        {
+            if (whp.WarehouseId != whpUpdate.WarehouseId)
+                whpUpdate.WarehouseId = whp.WarehouseId;
 
-        if (whp.WarehouseId != whpUpdate.WarehouseId)
-            whpUpdate.WarehouseId = whp.WarehouseId;
+            if (whp.ProductId != whpUpdate.ProductId)
+                whpUpdate.ProductId = whp.ProductId;
 
-        if (whp.ProductId != whpUpdate.ProductId)
-            whpUpdate.ProductId = whp.ProductId;
+            if (whp.UnitsInStock != whpUpdate.UnitsInStock)
+                whpUpdate.UnitsInStock = whp.UnitsInStock;
 
-        if (whp.UnitsInStock != whpUpdate.UnitsInStock)
-            whpUpdate.UnitsInStock = whp.UnitsInStock;
+            if (whp.UnitsOnOrder != whpUpdate.UnitsOnOrder)
+                whpUpdate.UnitsOnOrder = whp.UnitsOnOrder;
 
-        if (whp.UnitsOnOrder != whpUpdate.UnitsOnOrder)
-            whpUpdate.UnitsOnOrder = whp.UnitsOnOrder;
+            if (whp.ReorderLevel != whpUpdate.ReorderLevel)
+                whpUpdate.ReorderLevel = whp.ReorderLevel;
 
-        if (whp.ReorderLevel != whpUpdate.ReorderLevel)
-            whpUpdate.ReorderLevel = whp.ReorderLevel;
-        
-        if (whp.Discontinued != whpUpdate.Discontinued)
-            whpUpdate.Discontinued = whp.Discontinued;
+            if (whp.Discontinued != whpUpdate.Discontinued)
+                whpUpdate.Discontinued = whp.Discontinued;
 
-        context.Warehouseproducts.Update(whp);
-        context.SaveChanges();
+            context.Warehouseproducts.Update(whp);
+            context.SaveChanges();
+        }
     }
 
 }

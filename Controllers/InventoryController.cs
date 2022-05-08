@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Inventory_Web_Api.Controllers;
 
-[Authorize]
+//[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class InventoryController : ControllerBase{
@@ -22,7 +22,8 @@ public class InventoryController : ControllerBase{
 
     /// Categories
 
-    [HttpGet]
+    [HttpGet("category")]
+    
     public IEnumerable<Category> GetAllCategories()
     {
         return service.GetAllCategories();
@@ -43,7 +44,7 @@ public class InventoryController : ControllerBase{
         }
     }
 
-    [Authorize]
+    //[Authorize]
     [HttpPost]
     public IActionResult CreateCategory(Category newCategory)
     {
@@ -97,7 +98,7 @@ public class InventoryController : ControllerBase{
         }
     }
 
-    [Authorize]
+    //[Authorize]
     [HttpPost]
     public IActionResult CreateCompany(Company newCompany)
     {
@@ -151,7 +152,7 @@ public class InventoryController : ControllerBase{
         }
     }
 
-    [Authorize]
+    //[Authorize]
     [HttpPost]
     public IActionResult CreateEmployee(Employee newEmployee)
     {
@@ -206,7 +207,7 @@ public class InventoryController : ControllerBase{
         }
     }
 
-    [Authorize]
+    //[Authorize]
     [HttpPost]
     public IActionResult CreateProduct(Product newProduct)
     {
@@ -260,7 +261,7 @@ public class InventoryController : ControllerBase{
         }
     }
 
-    [Authorize]
+    //[Authorize]
     [HttpPost]
     public IActionResult CreateSupplier(Supplier newSupplier)
     {
@@ -314,7 +315,7 @@ public class InventoryController : ControllerBase{
         }
     }
 
-    [Authorize]
+    //[Authorize]
     [HttpPost]
     public IActionResult CreateWarehouse(Warehouse newWarehouse)
     {
@@ -354,7 +355,7 @@ public class InventoryController : ControllerBase{
     }
 
     /*
-    [Authorize]
+    //[Authorize]
     [HttpPost]
     public IActionResult CreateWarehouseproduct(Warehouseproduct newWarehouseproduct)
     {
