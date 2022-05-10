@@ -31,7 +31,7 @@ namespace Inventory_Web_Api.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySql("name=Nwind", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.27-mysql"), x => x.UseNetTopologySuite());
+                optionsBuilder.UseMySql("Server=localhost;Database=mynwind;Uid=root;Pwd=root;port=3310", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.27-mysql"), x => x.UseNetTopologySuite());
             }
         }
 

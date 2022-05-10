@@ -1,11 +1,17 @@
 //using Inventory_Web_Api.Data;
 //using Microsoft.EntityFrameworkCore;
+using Inventory_Web_Api.Data;
+using Inventory_Web_Api.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container
+builder.Services.AddDbContext<mynwindContext>();
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<InventoryServices>();
 
 var app = builder.Build();
 
