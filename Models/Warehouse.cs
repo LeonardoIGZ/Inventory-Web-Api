@@ -7,7 +7,7 @@ namespace Inventory_Web_Api.Models
     {
         public Warehouse()
         {
-            MovementSourceWarehouses = new HashSet<Movement>();
+            MovementOriginWarehouses = new HashSet<Movement>();
             MovementTargetWarehouses = new HashSet<Movement>();
             Warehouseproducts = new HashSet<Warehouseproduct>();
         }
@@ -18,7 +18,7 @@ namespace Inventory_Web_Api.Models
         public int CompanyId { get; set; }
 
         public virtual Company Company { get; set; } = null!;
-        public virtual ICollection<Movement> MovementSourceWarehouses { get; set; }
+        public virtual ICollection<Movement> MovementOriginWarehouses { get; set; }
         public virtual ICollection<Movement> MovementTargetWarehouses { get; set; }
         public virtual ICollection<Warehouseproduct> Warehouseproducts { get; set; }
     }

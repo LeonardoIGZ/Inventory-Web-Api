@@ -1,17 +1,20 @@
-//using Inventory_Web_Api.Data;
-//using Microsoft.EntityFrameworkCore;
 using Inventory_Web_Api.Data;
-using Inventory_Web_Api.Services;
+using Microsoft.EntityFrameworkCore;
+//using Inventory_Web_Api.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
-builder.Services.AddDbContext<mynwindContext>();
+var connectionString = builder.Configuration.GetConnectionString("Nwind");
+builder.Services.AddDbContext<NorthwindContext>(options =>
+{
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+});
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<InventoryServices>();
+//builder.Services.AddScoped<InventoryServices>();
 
 var app = builder.Build();
 
@@ -31,6 +34,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html");;
+app.MapFallbackToFile("index.html"); ;
 
 app.Run();
