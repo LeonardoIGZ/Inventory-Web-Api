@@ -2,7 +2,7 @@ import { Component } from "react";
 import {
     Button, Form, Navbar, Input, UncontrolledDropdown, DropdownToggle,
     DropdownMenu, DropdownItem, Card, CardBody, CardTitle, CardSubtitle,
-    CardText, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup
+    CardText, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Table
 } from "reactstrap";
 import {
     BsPlusLg, BsSearch, BsFillDiagram3Fill, BsBasketFill, BsBoxSeam,
@@ -18,10 +18,20 @@ export class Warehouse extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modal: false
+            modal: false, data: []
         };
 
         this.toggle = this.toggle.bind(this);
+    }
+
+    componentDidMount() {
+        fetch('/api/warehouses').then((response) => {
+            return response.json();
+        }).then((dataApi) => {
+            this.setState({ data: dataApi })
+        }).catch(function (error) {
+            console.log(error);
+        })
     }
 
     toggle() {
@@ -133,7 +143,7 @@ export class Warehouse extends Component {
                                             </ModalFooter>
                                         </Modal>
                                     </div>
-                                    <table id="example" className="table dt-responsive nowrap align-middle px-2">
+                                    <Table className="dt-responsive nowrap align-middle px-2">
                                         <thead>
                                             <tr>
                                                 <th>Clave</th>
@@ -143,43 +153,20 @@ export class Warehouse extends Component {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>0001</td>
-                                                <td>Almacen de botanas</td>
-                                                <td>Prolongacion Madero 1579</td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0002</td>
-                                                <td>Almacen de electronicos</td>
-                                                <td>Prolongacion Madero 1579</td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0003</td>
-                                                <td>Almacen de productos dañados</td>
-                                                <td>Prolongacion Madero 1579</td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0004</td>
-                                                <td>Almacen de productos de oficina</td>
-                                                <td>Prolongacion Madero 1579</td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0005</td>
-                                                <td>Almacen de plasticos</td>
-                                                <td>Prolongacion Madero 1579</td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
+                                            {
+                                                this.state.data.map(warehouses => 
+                                                    //console.log(warehouses);
+                                                    <tr key={warehouses.warehouseId}>
+                                                        <th scope="row">{warehouses.warehouseId}</th>
+                                                        <td>{warehouses.description}</td>
+                                                        <td>{warehouses.address}</td>
+                                                        <td className="text-center"><button type="button" className="btn btn-primary">
+                                                            <BsPencilFill /></button></td>
+                                                    </tr>
+                                                )
+                                            }
                                         </tbody>
-                                    </table>
+                                    </Table>
                                 </div>
                             </div>
                         </div>
