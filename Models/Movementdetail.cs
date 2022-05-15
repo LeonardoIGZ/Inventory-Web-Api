@@ -8,7 +8,7 @@ namespace Inventory_Web_Api.Models
         public int MovementId { get; set; }
         public int ProductId { get; set; }
         /// <summary>
-        /// Todos los movimientos manejaran cantidades en positivo, a excepción de los movimientos de ajuste que pueden manejar negativo, inidicacando así, cuando la cantidad de articulos se quiera dar de baja.
+        /// Todos los movimientos manejaran cantidades en positivo, a excepción de los movimientos de ajuste que pueden manejar negativos, indicando así, cuando la cantidad de artículos se quiera dar de baja.
         /// </summary>
         public int Quantity { get; set; }
 
