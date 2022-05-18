@@ -19,8 +19,8 @@ namespace Inventory_Web_Api.Models
         public string CompanyName { get; set; } = null!;
         public string AccountEmail { get; set; } = null!;
         public string Password { get; set; } = null!;
-        public DateOnly BeginPlan { get; set; }
-        public DateOnly EndPlan { get; set; }
+        public DateTime BeginPlan { get; set; }
+        public DateTime EndPlan { get; set; }
         public sbyte Active { get; set; }
 
         public virtual ICollection<Category> Categories { get; set; }
