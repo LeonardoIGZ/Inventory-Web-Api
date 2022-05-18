@@ -2,7 +2,7 @@ import { Component } from "react";
 import {
     Button, Form, Navbar, Input, UncontrolledDropdown, DropdownToggle,
     DropdownMenu, DropdownItem, Card, CardBody, CardTitle, CardSubtitle,
-    CardText, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Col, Row, InputGroupText, InputGroup
+    CardText, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Col, Row, InputGroupText, InputGroup, Table
 } from "reactstrap";
 import {
     BsPlusLg, BsSearch, BsFillDiagram3Fill, BsBasketFill, BsBoxSeam,
@@ -18,10 +18,20 @@ export class Product extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modal: false
+            modal: false, data: []
         };
 
         this.toggle = this.toggle.bind(this);
+    }
+
+    componentDidMount() {
+        fetch('/api/products').then((response) => {
+            return response.json();
+        }).then((dataApi) => {
+            this.setState({ data: dataApi })
+        }).catch(function (error) {
+            console.log(error);
+        })
     }
 
     toggle() {
@@ -177,61 +187,21 @@ export class Product extends Component {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>0001</td>
-                                                <td>Leche Lala</td>
-                                                <td>0025</td>
-                                                <td>0002</td>
-                                                <td>85</td>
-                                                <td>22</td>
-                                                <td><img src={Profile} alt="" style={{ width: "52px", height: "52px" }} /></td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0001</td>
-                                                <td>Leche Lala</td>
-                                                <td>0025</td>
-                                                <td>0002</td>
-                                                <td>85</td>
-                                                <td>22</td>
-                                                <td><img src={Profile} alt="" style={{ width: "52px", height: "52px" }} /></td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0001</td>
-                                                <td>Leche Lala</td>
-                                                <td>0025</td>
-                                                <td>0002</td>
-                                                <td>85</td>
-                                                <td>22</td>
-                                                <td><img src={Profile} alt="" style={{ width: "52px", height: "52px" }} /></td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0001</td>
-                                                <td>Leche Lala</td>
-                                                <td>0025</td>
-                                                <td>0002</td>
-                                                <td>85</td>
-                                                <td>22</td>
-                                                <td><img src={Profile} alt="" style={{ width: "52px", height: "52px" }} /></td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0001</td>
-                                                <td>Leche Lala</td>
-                                                <td>0025</td>
-                                                <td>0002</td>
-                                                <td>85</td>
-                                                <td>22</td>
-                                                <td><img src={Profile} alt="" style={{ width: "52px", height: "52px" }} /></td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
+                                            {
+                                                this.state.data.map(products => 
+                                                    <tr key={products.productId}>
+                                                        <th scope="row">{products.productId}</th>
+                                                        <td>{products.productName}</td>
+                                                        <td>{products.supplierId}</td>
+                                                        <td>{products.categoryId}</td>
+                                                        <td>{products.quantityPerUnit}</td>
+                                                        <td>{products.unitPrice}</td>
+                                                        <td>{products.photoPath}</td>
+                                                        <td className="text-center"><button type="button" className="btn btn-primary">
+                                                            <BsPencilFill /></button></td>
+                                                    </tr>
+                                                )
+                                            }
                                         </tbody>
                                     </table>
                                 </div>

@@ -2,7 +2,7 @@ import { Component } from "react";
 import {
     Button, Form, Navbar, Input, UncontrolledDropdown, DropdownToggle,
     DropdownMenu, DropdownItem, Card, CardBody, CardTitle, CardSubtitle,
-    CardText, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup
+    CardText, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Table
 } from "reactstrap";
 import {
     BsPlusLg, BsSearch, BsFillDiagram3Fill, BsBasketFill, BsBoxSeam,
@@ -18,10 +18,20 @@ export class Transaction extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modal: false
+            modal: false, data: []
         };
 
         this.toggle = this.toggle.bind(this);
+    }
+
+    componentDidMount() {
+        fetch('/api/suppliers').then((response) => {
+            return response.json();
+        }).then((dataApi) => {
+            this.setState({ data: dataApi })
+        }).catch(function (error) {
+            console.log(error);
+        })
     }
 
     toggle() {
@@ -158,7 +168,7 @@ export class Transaction extends Component {
                                             </ModalFooter>
                                         </Modal>
                                     </div>
-                                    <table id="example" className="table dt-responsive nowrap align-middle px-2">
+                                    <Table id="example" className="table dt-responsive nowrap align-middle px-2">
                                         <thead>
                                             <tr>
                                                 <th>Clave</th>
@@ -173,68 +183,75 @@ export class Transaction extends Component {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>0001</td>
-                                                <td>General Motors de México</td>
-                                                <td>Jose Zavala</td>
-                                                <td>Prolongacion Madero 1579</td>
-                                                <td>Uriangato</td>
-                                                <td>38980</td>
-                                                <td>México</td>
-                                                <td>4451234567</td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0002</td>
-                                                <td>01-01-2022</td>
-                                                <td>Compra</td>
-                                                <td>2</td>
-                                                <td>Uriangato</td>
-                                                <td>38980</td>
-                                                <td>México</td>
-                                                <td>4451234567</td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0003</td>
-                                                <td>01-01-2022</td>
-                                                <td>Ajuste</td>
-                                                <td>3</td>
-                                                <td>Uriangato</td>
-                                                <td>38980</td>
-                                                <td>México</td>
-                                                <td>4451234567</td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0004</td>
-                                                <td>01-01-2022</td>
-                                                <td>Traspaso</td>
-                                                <td>3-2</td>
-                                                <td>Uriangato</td>
-                                                <td>38980</td>
-                                                <td>México</td>
-                                                <td>4451234567</td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0005</td>
-                                                <td>01-01-2022</td>
-                                                <td>Compra</td>
-                                                <td>2</td>
-                                                <td>Uriangato</td>
-                                                <td>38980</td>
-                                                <td>México</td>
-                                                <td>4451234567</td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
+                                            {
+                                                this.state.data.map(suppliers => 
+                                                    //console.log(suppliers);
+                                                    <tr key={suppliers.supplierId}>
+                                                        <th scope="row">{suppliers.supplierId}</th>
+                                                        <td>{suppliers.companyName}</td>
+                                                        <td>{suppliers.contactName}</td>
+                                                        <td>{suppliers.address}</td>
+                                                        <td>{suppliers.city}</td>
+                                                        <td>{suppliers.postalCode}</td>
+                                                        <td>{suppliers.country}</td>
+                                                        <td>{suppliers.phone}</td>
+                                                        <td className="text-center"><Button type="button" onClick={this.toggle} className="btn btn-primary">
+                                                            <BsPencilFill /></Button>
+                                                            <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} centered>
+                                            <ModalHeader toggle={this.toggle} className="text-dark" close={<Button onClick={this.toggle} className="btn-close"></Button>}>Agregar Proveedor</ModalHeader>
+                                            <ModalBody className="text-dark">
+                                                <Form>
+                                                    <FormGroup>
+                                                        <label for="txt-company">ID de la compañia</label>
+                                                        <input type="text" className="form-control mb-3" placeholder="" disabled="true" />
+                                                    </FormGroup>
+                                                    <FormGroup>
+                                                        <label for="txt-company">Nombre de la compañia</label>
+                                                        <input type="text" className="form-control mb-3" placeholder="Empresa-X" />
+                                                    </FormGroup>
+
+                                                    <FormGroup>
+                                                        <label for="txt-company">Nombre del proovedor</label>
+                                                        <input type="text" className="form-control mb-3" placeholder="Juan López Zavala" />
+                                                    </FormGroup>
+
+                                                    <FormGroup>
+                                                        <label for="txt-address">Direccion del proovedor</label>
+                                                        <input type="text" className="form-control mb-3" placeholder="Prolongacion Emiliano Zapata 654" />
+                                                    </FormGroup>
+
+                                                    <FormGroup>
+                                                        <label for="txt-city">Ciudad</label>
+                                                        <input type="text" className="form-control mb-3" placeholder="Morelia" />
+                                                    </FormGroup>
+
+                                                    <FormGroup>
+                                                        <label for="txt-cp">Codigo postal</label>
+                                                        <input type="text" className="form-control mb-3" placeholder="384571" />
+                                                    </FormGroup>
+
+                                                    <FormGroup>
+                                                        <label for="txt-country">Pais</label>
+                                                        <input type="text" className="form-control mb-3" placeholder="México" />
+                                                    </FormGroup>
+
+                                                    <FormGroup>
+                                                        <label for="txt-phone">Telefono de contacto</label>
+                                                        <input type="tel" className="form-control mb-3" placeholder="XXX-XXX-XX-XX" />
+                                                    </FormGroup>
+                                                </Form>
+                                            </ModalBody>
+                                            <ModalFooter>
+                                                <Button color="primary" onClick={this.toggle}>Agregar</Button>
+                                                <Button color="secondary" onClick={this.toggle}>Cancelar</Button>
+                                            </ModalFooter>
+                                        </Modal>
+                                                            </td>
+                                                    </tr>
+                                                )
+                                            }
                                         </tbody>
-                                    </table>
+                                    </Table>
                                 </div>
                             </div>
                             {/*<div className="modal" tabindex="-1" id="exampleModal">

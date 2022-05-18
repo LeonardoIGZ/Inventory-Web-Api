@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, useEffect, useState } from "react";
 import {
     Button, Form, Navbar, Input, UncontrolledDropdown, DropdownToggle,
     DropdownMenu, DropdownItem, Card, CardBody, CardTitle, CardSubtitle,
@@ -10,18 +10,23 @@ import {
 } from "react-icons/bs";
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../css/transactions.css';
+import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from '../Images/northwindLogoUnico.png';
 import Profile from '../Images/stone-cold-steve-austin-wwe.jpg';
+import { post } from "jquery";
 
 export class Warehouse extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            modal: false, data: []
+            modal: false, modal2: false, data: [],
+            warehouseId: "", description: "", address: ""
         };
 
         this.toggle = this.toggle.bind(this);
+        this.toggle2 = this.toggle2.bind(this);
     }
 
     componentDidMount() {
@@ -34,9 +39,48 @@ export class Warehouse extends Component {
         })
     }
 
+    handleClick(){
+
+    }
+
+    create = (warehouse) => {
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(warehouse)
+        };
+
+        fetch('warehouse', options)
+            .then(
+                (response) => { return response.status; }
+            ).then(
+                (code) => {
+                    if (code == 201) {
+                        console.log(code);
+
+                        const warehouses = Array.from(this.state.data);
+                        warehouses.push({ warehouseId: warehouse.warehouseId, 
+                                        description: warehouse.description,
+                                        address: warehouse.address});
+                        this.componentDidMount();
+                        this.setState({ accion: 0 });
+
+                    }
+                }
+            );
+        }
+
+
     toggle() {
         this.setState({
             modal: !this.state.modal
+        });
+    }
+    toggle2() {
+        this.setState({
+            modal2: !this.state.modal2
         });
     }
 
@@ -128,12 +172,12 @@ export class Warehouse extends Component {
                                                     </FormGroup>
                                                     <FormGroup>
                                                         <label for="txt-company">Descripción del almacen</label>
-                                                        <input type="text" className="form-control mb-3" placeholder="Empresa-X" />
+                                                        <input type="text" name="description" className="form-control mb-3" placeholder="Empresa-X" />
                                                     </FormGroup>
 
                                                     <FormGroup>
                                                         <label for="txt-company">Dirección del almacen</label>
-                                                        <input type="text" className="form-control mb-3" placeholder="Juan López Zavala" />
+                                                        <input type="text" name="address" className="form-control mb-3" placeholder="Juan López Zavala" />
                                                     </FormGroup>
                                                 </Form>
                                             </ModalBody>
@@ -154,14 +198,38 @@ export class Warehouse extends Component {
                                         </thead>
                                         <tbody>
                                             {
-                                                this.state.data.map(warehouses => 
-                                                    //console.log(warehouses);
+                                                this.state.data.map(warehouses =>
                                                     <tr key={warehouses.warehouseId}>
                                                         <th scope="row">{warehouses.warehouseId}</th>
                                                         <td>{warehouses.description}</td>
                                                         <td>{warehouses.address}</td>
-                                                        <td className="text-center"><button type="button" className="btn btn-primary">
-                                                            <BsPencilFill /></button></td>
+                                                        <td className="text-center"><Button type="button" onClick={this.toggle2} className="btn btn-primary">
+                                                            <BsPencilFill /></Button>
+                                                            <Modal isOpen={this.state.modal2} toggle={this.toggle2} className={this.props.className} centered>
+                                                                <ModalHeader toggle={this.toggle2} className="text-dark" close={<Button onClick={this.toggle2} className="btn-close"></Button>}>Editar Almacen</ModalHeader>
+                                                                <ModalBody className="text-dark">
+                                                                    <Form>
+                                                                        <FormGroup>
+                                                                            <label for="txt-company">ID del almacen</label>
+                                                                            <input type="text" className="form-control mb-3" placeholder="" disabled="true" />
+                                                                        </FormGroup>
+                                                                        <FormGroup>
+                                                                            <label for="txt-company">Descripción del almacen</label>
+                                                                            <input type="text" name="description" className="form-control mb-3" placeholder="Empresa-X" />
+                                                                        </FormGroup>
+
+                                                                        <FormGroup>
+                                                                            <label for="txt-company">Dirección del almacen</label>
+                                                                            <input type="text" name="address" className="form-control mb-3" placeholder="Juan López Zavala" />
+                                                                        </FormGroup>
+                                                                    </Form>
+                                                                </ModalBody>
+                                                                <ModalFooter>
+                                                                    <Button color="primary" onClick={this.toggle2}>Editar</Button>
+                                                                    <Button color="secondary" onClick={this.toggle2}>Cancelar</Button>
+                                                                </ModalFooter>
+                                                            </Modal>
+                                                        </td>
                                                     </tr>
                                                 )
                                             }

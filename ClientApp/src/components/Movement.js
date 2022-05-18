@@ -18,10 +18,20 @@ export class Movement extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modal: false
+            modal: false, data: []
         };
 
         this.toggle = this.toggle.bind(this);
+    }
+
+    componentDidMount() {
+        fetch('/api/movements').then((response) => {
+            return response.json();
+        }).then((dataApi) => {
+            this.setState({ data: dataApi })
+        }).catch(function (error) {
+            console.log(error);
+        })
     }
 
     toggle() {
@@ -185,66 +195,22 @@ export class Movement extends Component {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>0001</td>
-                                                <td>02-05-2021</td>
-                                                <td>0052</td>
-                                                <td>0009</td>
-                                                <td>0001</td>
-                                                <td>TRASPASO</td>
-                                                <td>Se entregaron 5 productos que no tenia el almacen 9</td>
-                                                <td>1234</td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0002</td>
-                                                <td>02-05-2021</td>
-                                                <td>0052</td>
-                                                <td>0009</td>
-                                                <td>0001</td>
-                                                <td>TRASPASO</td>
-                                                <td>Se entregaron 5 productos que no tenia el almacen 9</td>
-                                                <td>1234</td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0003</td>
-                                                <td>02-05-2021</td>
-                                                <td>0052</td>
-                                                <td>0009</td>
-                                                <td>0001</td>
-                                                <td>TRASPASO</td>
-                                                <td>Se entregaron 5 productos que no tenia el almacen 9</td>
-                                                <td>1234</td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0004</td>
-                                                <td>02-05-2021</td>
-                                                <td>0052</td>
-                                                <td>0009</td>
-                                                <td>0001</td>
-                                                <td>TRASPASO</td>
-                                                <td>Se entregaron 5 productos que no tenia el almacen 9</td>
-                                                <td>1234</td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0005</td>
-                                                <td>02-05-2021</td>
-                                                <td>0052</td>
-                                                <td>0009</td>
-                                                <td>0001</td>
-                                                <td>TRASPASO</td>
-                                                <td>Se entregaron 5 productos que no tenia el almacen 9</td>
-                                                <td>1234</td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
+                                            {
+                                                this.state.data.map(movements => 
+                                                    <tr key={movements.movementId}>
+                                                        <th scope="row">{movements.movementId}</th>
+                                                        <td>{movements.date}</td>
+                                                        <td>{movements.supplierId}</td>
+                                                        <td>{movements.originWarehouseId}</td>
+                                                        <td>{movements.targetWarehouseId}</td>
+                                                        <td>{movements.type}</td>
+                                                        <td>{movements.notes}</td>
+                                                        <td>{movements.companyId}</td>
+                                                        <td className="text-center"><button type="button" className="btn btn-primary">
+                                                            <BsPencilFill /></button></td>
+                                                    </tr>
+                                                )
+                                            }
                                         </tbody>
                                     </table>
                                 </div>

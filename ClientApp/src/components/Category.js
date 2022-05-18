@@ -18,10 +18,20 @@ export class Category extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modal: false
+            modal: false, data: []
         };
 
         this.toggle = this.toggle.bind(this);
+    }
+
+    componentDidMount() {
+        fetch('/api/categories').then((response) => {
+            return response.json();
+        }).then((dataApi) => {
+            this.setState({ data: dataApi })
+        }).catch(function (error) {
+            console.log(error);
+        })
     }
 
     toggle() {
@@ -147,46 +157,18 @@ export class Category extends Component {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>0001</td>
-                                                <td>Leche Lala</td>
-                                                <td>0025</td>
-                                                <td><img src={Profile} alt="" style={{ width: "52px", height: "52px" }} /></td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0001</td>
-                                                <td>Leche Lala</td>
-                                                <td>0025</td>
-                                                <td><img src={Profile} alt="" style={{ width: "52px", height: "52px" }} /></td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0001</td>
-                                                <td>Leche Lala</td>
-                                                <td>0025</td>
-                                                <td><img src={Profile} alt="" style={{ width: "52px", height: "52px" }} /></td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0001</td>
-                                                <td>Leche Lala</td>
-                                                <td>0025</td>
-                                                <td><img src={Profile} alt="" style={{ width: "52px", height: "52px" }} /></td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>0001</td>
-                                                <td>Leche Lala</td>
-                                                <td>0025</td>
-                                                <td><img src={Profile} alt="" style={{ width: "52px", height: "52px" }} /></td>
-                                                <td className="text-center"><button type="button" className="btn btn-primary"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal"><BsPencilFill /></button></td>
-                                            </tr>
+                                            {
+                                                this.state.data.map(categories => 
+                                                    <tr key={categories.categoryId}>
+                                                        <th scope="row">{categories.categoryId}</th>
+                                                        <td>{categories.categoryName}</td>
+                                                        <td>{categories.description}</td>
+                                                        <td>{categories.picture}</td>
+                                                        <td className="text-center"><button type="button" className="btn btn-primary">
+                                                            <BsPencilFill /></button></td>
+                                                    </tr>
+                                                )
+                                            }
                                         </tbody>
                                     </table>
                                 </div>
