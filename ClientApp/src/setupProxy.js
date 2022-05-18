@@ -13,12 +13,8 @@ const context =  [
   "/api/movements",
   "/api/products",
   "/api/suppliers",
-<<<<<<< HEAD
   "/api/warehouses",
-=======
-  "/api/warehouses ",
->>>>>>> aba6c42f6c00287933f036dd7fc964cc4badf257
-  "/api/warehouseproduct"
+  "/api/warehouseproducts"
 ];
 
 module.exports = function(app) {
