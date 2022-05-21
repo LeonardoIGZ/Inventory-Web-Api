@@ -309,11 +309,11 @@ namespace Inventory_Web_Api.Data
 
                 entity.Property(e => e.Description).HasMaxLength(45);
 
-                entity.HasOne(d => d.Company)
+                /*entity.HasOne(d => d.Company)
                     .WithMany(p => p.Warehouses)
                     .HasForeignKey(d => d.CompanyId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_warehouses_companies1");
+                    .HasConstraintName("fk_warehouses_companies1");*/
             });
 
             modelBuilder.Entity<Warehouseproduct>(entity =>

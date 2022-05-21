@@ -16,17 +16,16 @@ import Logo from '../Images/northwindLogoUnico.png';
 import Profile from '../Images/stone-cold-steve-austin-wwe.jpg';
 import { post } from "jquery";
 
+
 export class Warehouse extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            modal: false, modal2: false, data: [],
-            warehouseId: "", description: "", address: ""
+            modal: false, modal2: false, data: [],accion: 0, id: 0,
+            description: "", address: ""
         };
-
-        this.toggle = this.toggle.bind(this);
-        this.toggle2 = this.toggle2.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {
@@ -39,10 +38,6 @@ export class Warehouse extends Component {
         })
     }
 
-    handleClick(){
-
-    }
-
     create = (warehouse) => {
         const options = {
             method: "POST",
@@ -52,7 +47,7 @@ export class Warehouse extends Component {
             body: JSON.stringify(warehouse)
         };
 
-        fetch('warehouse', options)
+        fetch('/api/warehouses', options)
             .then(
                 (response) => { return response.status; }
             ).then(
@@ -72,17 +67,52 @@ export class Warehouse extends Component {
             );
         }
 
+        handleClick() {
+            /*console.log('this is:', this);
+            console.log('e:', e.target);
+            console.log('e:', e);*/
+            //this.setState({ modalUpdate: true });
+            const warehouse = {
+                //WarehouseId: null,
+                Description: this.state.description,
+                Address: this.state.address,
+                CompanyId: 1
+            };
+    
+            console.log(warehouse);
+    
+            switch (this.state.accion) {
+                case 1:
+                    this.create(warehouse);
+                    break;
+    
+                case 2:
+                    this.edit(warehouse);
+                    break;
+            }
+    
+        }
+    
+        handleChange = (e) => {
+            if (e.target.name == 'warehouseId') {
+                const alm = Array.from(e.target.selectedOptions, option => option.value);
+                console.log(alm);
+                this.setState({ warehouseId: alm });
+                console.log(this.state);
+            }else {
+                this.setState({ [e.target.name]: e.target.value });
+            }
+        };
 
-    toggle() {
-        this.setState({
-            modal: !this.state.modal
-        });
+    mitoogle = () => {
+        this.setState({ accion: 0 });
     }
-    toggle2() {
+
+    mostrarModalAgregar = () => {
         this.setState({
-            modal2: !this.state.modal2
+            accion: 1,
         });
-    }
+    };
 
     render() {
         return (
@@ -159,11 +189,11 @@ export class Warehouse extends Component {
                             <div style={{ backgroundcolor: "#0055FF" }}>
                                 <div className="py-3 my-5 bg-light mx-5 px-3">
                                     <div>
-                                        <Button color="primary" onClick={this.toggle}><BsPlusLg /> Agregar </Button>
+                                        <Button color="primary" onClick={() => this.mostrarModalAgregar()}><BsPlusLg /> Agregar </Button>
                                     </div>
                                     <div>
-                                        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} centered>
-                                            <ModalHeader toggle={this.toggle} className="text-dark" close={<Button onClick={this.toggle} className="btn-close"></Button>}>Agregar Almacen</ModalHeader>
+                                        <Modal isOpen={this.state.accion == 1} toggle={this.mitoggle} className={this.props.className} centered>
+                                            <ModalHeader toggle={this.mitoogle} className="text-dark" close={<Button onClick={this.mitoogle} className="btn-close"></Button>}>Agregar Almacen</ModalHeader>
                                             <ModalBody className="text-dark">
                                                 <Form>
                                                     <FormGroup>
@@ -172,18 +202,18 @@ export class Warehouse extends Component {
                                                     </FormGroup>
                                                     <FormGroup>
                                                         <label for="txt-company">Descripción del almacen</label>
-                                                        <input type="text" name="description" className="form-control mb-3" placeholder="Empresa-X" />
+                                                        <input type="text" name="description" className="form-control mb-3" onChange={this.handleChange} value={this.state.description} placeholder="Empresa-X" />
                                                     </FormGroup>
 
                                                     <FormGroup>
                                                         <label for="txt-company">Dirección del almacen</label>
-                                                        <input type="text" name="address" className="form-control mb-3" placeholder="Juan López Zavala" />
+                                                        <input type="text" name="address" className="form-control mb-3" onChange={this.handleChange} value={this.state.address} placeholder="Juan López Zavala" />
                                                     </FormGroup>
                                                 </Form>
                                             </ModalBody>
                                             <ModalFooter>
-                                                <Button color="primary" onClick={this.toggle}>Agregar</Button>
-                                                <Button color="secondary" onClick={this.toggle}>Cancelar</Button>
+                                                <Button color="primary" onClick={this.handleClick}>Agregar</Button>
+                                                <Button color="secondary" onClick={this.mitoogle}>Cancelar</Button>
                                             </ModalFooter>
                                         </Modal>
                                     </div>

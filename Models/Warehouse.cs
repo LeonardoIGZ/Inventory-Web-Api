@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Inventory_Web_Api.Models
 {
@@ -17,7 +18,8 @@ namespace Inventory_Web_Api.Models
         public string? Address { get; set; }
         public int CompanyId { get; set; }
 
-        public virtual Company Company { get; set; } = null!;
+        //[JsonIgnore]
+        //public virtual Company Company { get; set; } = null!;
         public virtual ICollection<Movement> MovementOriginWarehouses { get; set; }
         public virtual ICollection<Movement> MovementTargetWarehouses { get; set; }
         public virtual ICollection<Warehouseproduct> Warehouseproducts { get; set; }
